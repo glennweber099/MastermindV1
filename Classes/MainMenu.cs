@@ -26,7 +26,7 @@ namespace MastermindV1.Classes
                 {
                     answer = answer + RandomNumberGenerator.GetInt32(1, 6).ToString();
                 }
-
+                Console.WriteLine("User Attempts Taken: 0/10");
                 //Limits player to 10 total attempts
                 while (TotalAttempts < 10)
                 {
@@ -34,14 +34,18 @@ namespace MastermindV1.Classes
                     if (AttemptValues(answer))
                     {
                         //If successfull, set solved to true and break out of loop
+                        TotalAttempts = TotalAttempts + 1;
+                        Console.WriteLine("User Attempts Taken: {0}/10", TotalAttempts.ToString());
                         solved = true;
                         break;
                     }
                     else
                     {
                         //If unsuccessfull, add attempts to count of total attempts taken so far
-                        solved = false;
                         TotalAttempts = TotalAttempts + 1;
+                        Console.WriteLine("User Attempts Taken: {0}/10", TotalAttempts.ToString());
+                        solved = false;
+                        
                     }
 
                 }
