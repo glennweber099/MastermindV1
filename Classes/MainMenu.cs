@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using System.Security.Cryptography;
 
 namespace MastermindV1.Classes
 {
     public class MainMenu
     {
+        /// <summary>
+        /// Initial set of console app and set the value of Mastermind
+        /// </summary>
         static void Main()
         {
             while (true)
@@ -20,6 +14,10 @@ namespace MastermindV1.Classes
                 int TotalAttempts = 0;
                 bool solved = false;
                 Console.WriteLine($"\t\t\t\t\tWelcome To Mastermind!");
+                //Provides key for result to user
+                Console.WriteLine($"Answer Key");
+                Console.WriteLine($"\t+ -> Correct Number and Placement of Number");
+                Console.WriteLine($"\t- -> Correct Number but Wrong Placement of Number");
                 Console.WriteLine($"Please enter 4 digits that values are between 1 and 6. Press ENTER to submit guess.");
 
                 //Set Mastermind value to be attempted to be solved for
@@ -28,7 +26,7 @@ namespace MastermindV1.Classes
                 {
                     answer = answer + RandomNumberGenerator.GetInt32(1, 6).ToString();
                 }
-                Console.WriteLine("Mastermind value: {0}", answer);
+
                 //Limits player to 10 total attempts
                 while (TotalAttempts < 10)
                 {
@@ -63,6 +61,11 @@ namespace MastermindV1.Classes
             }
         }
 
+        /// <summary>
+        /// Checks if the value passed in matches the answer and returns false if not with the input sent in CheckForEachValue when at least one number is wrong or in the wrong position
+        /// </summary>
+        /// <param name="answer"></param>
+        /// <returns></returns>
         public static bool AttemptValues(string answer)
         {
             while (true)
@@ -91,6 +94,11 @@ namespace MastermindV1.Classes
             }
         }
 
+        /// <summary>
+        /// Goes through value provided by user and the answer of the mastermind and sends input if correct number and placement, correct number, or neither
+        /// </summary>
+        /// <param name="userEntry"></param>
+        /// <param name="answer"></param>
         public static void CheckForEachValue(string userEntry, string answer)
         {
             //Handles all correct numbers in the correct position
@@ -133,6 +141,11 @@ namespace MastermindV1.Classes
             }
         }
 
+        /// <summary>
+        /// Checks each key press, and only allows BACKSPACE, ENTER when criteria is met, or a number between 1 and 6
+        /// </summary>
+        /// <param name="check"></param>
+        /// <returns></returns>
         public static string ReadKeys(Predicate<string> check)
         {
             string valid = string.Empty;
