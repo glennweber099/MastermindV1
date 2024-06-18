@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
 using System.Text;
@@ -17,74 +18,118 @@ namespace MastermindV1.Classes
             while (true)
             {
                 int TotalAttempts = 0;
+                bool solved = false;
                 Console.WriteLine($"\t\t\t\t\tWelcome To Mastermind!");
                 Console.WriteLine($"Please enter 4 digits that values are between 1 and 6. Press ENTER to submit guess.");
 
                 //Set Mastermind value to be attempted to be solved for
-                string randomValue = string.Empty;
-                while (randomValue.Length < 4)
+                string answer = string.Empty;
+                while (answer.Length < 4)
                 {
-                    randomValue = randomValue + RandomNumberGenerator.GetInt32(1, 6).ToString();
+                    answer = answer + RandomNumberGenerator.GetInt32(1, 6).ToString();
                 }
-                Console.WriteLine("Mastermind value: {0}", randomValue);
-
+                Console.WriteLine("Mastermind value: {0}", answer);
                 //Limits player to 10 total attempts
                 while (TotalAttempts < 10)
                 {
-
-                    if (AttemptValues(randomValue))
+                    
+                    if (AttemptValues(answer))
                     {
-                        //If successfull, print message notifying user and end program
-                        Console.WriteLine();
-                        Console.WriteLine("Congratulations you solved the Mastermind!");
+                        //If successfull, set solved to true and break out of loop
+                        solved = true;
                         break;
                     }
                     else
                     {
                         //If unsuccessfull, add attempts to count of total attempts taken so far
+                        solved = false;
                         TotalAttempts = TotalAttempts + 1;
                     }
 
                 }
-                //Let's user know they ran out of attempts and to try again and ends the program
-                Console.WriteLine("Out of attempts, try again if you dare!");
+
+                if (solved)
+                {
+                    //Let's user know they won Mastermind
+                    Console.WriteLine();
+                    Console.WriteLine("Congratulations you solved the Mastermind!");
+                }
+                else
+                {
+                    //Let's user know they ran out of attempts and to try again and ends the program
+                    Console.WriteLine("Out of attempts, try again if you dare!");
+                }
                 break;
             }
         }
 
-        public static bool AttemptValues(string randomValue)
+        public static bool AttemptValues(string answer)
         {
             while (true)
             {
-                string entry = ReadKeys(
-                        s => { StringToDouble(s); return true; });
+                Console.WriteLine("Your Guess");
+                string userEntry = ReadKeys(
+                        s => { double.Parse(s); return true; });
 
-                double result = StringToDouble(entry);
-
-                //Check if its an exact match
-                if(result.ToString() == randomValue)
+                //Check if its an exact match and goes past the logic for each individual value
+                if(userEntry == answer)
                 {
+                    Console.WriteLine();
+                    Console.WriteLine("Position 1: +");
+                    Console.WriteLine("Position 2: +");
+                    Console.WriteLine("Position 3: +");
+                    Console.WriteLine("Position 4: +");
                     return true;
                 }
+                //Runs logic to check each value inputed by the user and compares the value provided to the answer
                 else
                 {
                     Console.WriteLine();
-                    Console.WriteLine("Incorrect! You tried the following value: {0}", result);
+                    CheckForEachValue(userEntry, answer);
                     return false;
                 }
             }
         }
 
-        public static double StringToDouble(string s)
+        public static void CheckForEachValue(string userEntry, string answer)
         {
-            try
+            //Handles all correct numbers in the correct position
+            int indexPlacement = 0;
+            int MasterMindPosition = 1;
+            while(indexPlacement < answer.Length)
             {
-                return double.Parse(s);
+                if (userEntry[indexPlacement] == answer[indexPlacement])
+                {
+                    Console.WriteLine("Positon {0}: +", MasterMindPosition.ToString());
+                }
+                MasterMindPosition++;
+                indexPlacement++;
             }
-            catch (FormatException)
+
+            //Handles all correct numbers in the wrong position and not already listed as being in the correct position earlier
+            indexPlacement = 0;
+            MasterMindPosition = 1;
+            while (indexPlacement < answer.Length)
             {
-                // handle trailing E and +/- signs
-                return double.Parse(s + '0');
+                if (answer.Contains(userEntry[indexPlacement]) && userEntry[indexPlacement] != answer[indexPlacement])
+                {
+                    Console.WriteLine("Positon {0}: -", MasterMindPosition.ToString());
+                }
+                MasterMindPosition++;
+                indexPlacement++;
+            }
+
+            //Handles all numbers not within the answer
+            indexPlacement = 0;
+            MasterMindPosition = 1;
+            while (indexPlacement < answer.Length)
+            {
+                if (!answer.Contains(userEntry[indexPlacement]) && userEntry[indexPlacement] != answer[indexPlacement])
+                {
+                    Console.WriteLine("Positon {0}: ", MasterMindPosition.ToString());
+                }
+                MasterMindPosition++;
+                indexPlacement++;
             }
         }
 
