@@ -5,7 +5,7 @@ namespace MastermindV1.Classes
     public class MainMenu
     {
         /// <summary>
-        /// Initial set of console app and set the value of Mastermind
+        /// Initial setup of console app and sets the value of Mastermind answer
         /// </summary>
         static void Main()
         {
@@ -182,7 +182,7 @@ namespace MastermindV1.Classes
                 try
                 {
                     double checkedValue = double.Parse(char.ToString(keyChar)); //sets value of pressed key to a numeric value
-                    if (checkedValue > 0 && checkedValue < 7) //checks if value is between 1 and 6 if number
+                    if (checkedValue > 0 && checkedValue < 7) //checks value of number is between 1 and 6
                     {
                         Console.Write(keyChar); //add valid number to be visible in the console
                         valid = candidate; //set value of accepted values to new value with previously selected value
