@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,21 +14,65 @@ namespace MastermindV1.Classes
     {
         static void Main()
         {
-            Directory.SetCurrentDirectory(@"../../../..");
-            bool MainMenu = true;
-            Console.WriteLine($"\t\t\t\t\tWelcome To Mastermind!");
-            Console.WriteLine($"Please enter 4 digits that values are between 1 and 6. Press ENTER to submit guess.");
-            while (MainMenu)
+            while (true)
+            {
+                int TotalAttempts = 0;
+                Console.WriteLine($"\t\t\t\t\tWelcome To Mastermind!");
+                Console.WriteLine($"Please enter 4 digits that values are between 1 and 6. Press ENTER to submit guess.");
+
+                //Set Mastermind value to be attempted to be solved for
+                string randomValue = string.Empty;
+                while (randomValue.Length < 4)
+                {
+                    randomValue = randomValue + RandomNumberGenerator.GetInt32(1, 6).ToString();
+                }
+                Console.WriteLine("Mastermind value: {0}", randomValue);
+
+                //Limits player to 10 total attempts
+                while (TotalAttempts < 10)
+                {
+
+                    if (AttemptValues(randomValue))
+                    {
+                        //If successfull, print message notifying user and end program
+                        Console.WriteLine();
+                        Console.WriteLine("Congratulations you solved the Mastermind!");
+                        break;
+                    }
+                    else
+                    {
+                        //If unsuccessfull, add attempts to count of total attempts taken so far
+                        TotalAttempts = TotalAttempts + 1;
+                    }
+
+                }
+                //Let's user know they ran out of attempts and to try again and ends the program
+                Console.WriteLine("Out of attempts, try again if you dare!");
+                break;
+            }
+        }
+
+        public static bool AttemptValues(string randomValue)
+        {
+            while (true)
             {
                 string entry = ReadKeys(
                         s => { StringToDouble(s); return true; });
 
                 double result = StringToDouble(entry);
 
-                Console.WriteLine();
-                Console.WriteLine("You tried the following value: {0}", result);
+                //Check if its an exact match
+                if(result.ToString() == randomValue)
+                {
+                    return true;
+                }
+                else
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Incorrect! You tried the following value: {0}", result);
+                    return false;
+                }
             }
-  
         }
 
         public static double StringToDouble(string s)
