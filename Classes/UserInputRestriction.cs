@@ -1,6 +1,4 @@
-﻿using static System.Runtime.InteropServices.JavaScript.JSType;
-
-namespace MastermindV1.Classes
+﻿namespace MastermindV1.Classes
 {
     public class UserInputRestriction
     {
