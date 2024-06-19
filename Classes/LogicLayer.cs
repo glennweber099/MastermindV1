@@ -1,4 +1,6 @@
-﻿namespace MastermindV1.Classes
+﻿using System.Security.Cryptography;
+
+namespace MastermindV1.Classes
 {
     public class LogicLayer
     {
@@ -15,7 +17,7 @@
             {
                 if (userEntry[indexPlacement] == answer[indexPlacement])
                 {
-                    Console.WriteLine("Positon {0}: +", (indexPlacement + 1).ToString());
+                    Presentation.CorrectNumberAndPlacementMessage(indexPlacement + 1);
                 }
                 indexPlacement++;
             }
@@ -26,7 +28,7 @@
             {
                 if (answer.Contains(userEntry[indexPlacement]) && userEntry[indexPlacement] != answer[indexPlacement])
                 {
-                    Console.WriteLine("Positon {0}: -", (indexPlacement + 1).ToString());
+                    Presentation.CorrectNumberAndIncorrectPlacementMessage(indexPlacement + 1);
                 }
                 indexPlacement++;
             }
@@ -48,11 +50,6 @@
                 //Check if its an exact match and goes past the logic for each individual value
                 if (userEntry == answer)
                 {
-                    Console.WriteLine();
-                    Console.WriteLine("Position 1: +");
-                    Console.WriteLine("Position 2: +");
-                    Console.WriteLine("Position 3: +");
-                    Console.WriteLine("Position 4: +");
                     return true;
                 }
                 //Runs logic to check each value inputed by the user and compares the value provided to the answer
@@ -63,6 +60,16 @@
                     return false;
                 }
             }
+        }
+
+        public string SetMastermindAnswer()
+        {
+            string answer = string.Empty;
+            while (answer.Length < 4)
+            {
+                answer = answer + RandomNumberGenerator.GetInt32(1, 6).ToString();
+            }
+            return answer;
         }
     }
 }

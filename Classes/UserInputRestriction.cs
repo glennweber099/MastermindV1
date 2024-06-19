@@ -41,7 +41,7 @@
                     //Prevents user from adding more than 4 numbers into the input
                     if (validInput.Length <= 3)
                     {
-                        if (value > 0 && double.Parse(value.ToString()) < 7) //checks value of number is between 1 and 6 due to requirements limiting the numbers of the solution being between 1 and 6 for the 4 digits
+                        if (value > 0 && value < 7) //checks value of number is between 1 and 6 due to requirements limiting the numbers of the solution being between 1 and 6 for the 4 digits
                         {
                             Console.Write(key.KeyChar.ToString()); //add valid number to be visible in the console
                             validInput = currentInput; //set value of accepted values to new value with previously selected value
