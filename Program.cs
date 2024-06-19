@@ -1,5 +1,4 @@
 ﻿using System.Security.Cryptography;
-using MastermindV1.Classes;
 
 namespace MastermindV1.Classes
 {
