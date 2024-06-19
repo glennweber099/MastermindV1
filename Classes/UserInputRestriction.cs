@@ -1,4 +1,6 @@
-﻿namespace MastermindV1.Classes
+﻿using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace MastermindV1.Classes
 {
     public class UserInputRestriction
     {
@@ -12,6 +14,7 @@
             string valid = string.Empty;
             while (true)
             {
+                double value;
                 //reads value of pressed key
                 ConsoleKeyInfo key = Console.ReadKey(true);
                 if (key.Key == ConsoleKey.Enter)
@@ -33,25 +36,19 @@
                     }
                 }
 
-                //checks value of key other than backspace or enter
-                char keyChar = key.KeyChar;
-                string candidate = valid + keyChar; //sets checked value to whatever was already accepted and adds pressed key
-                try
+                //checks value of key is a numeric value
+                if (Double.TryParse(key.KeyChar.ToString(), out value))
                 {
+                    string candidate = valid + key.KeyChar; //sets checked value to whatever was already accepted and adds pressed key
                     //Prevents user from adding more than 4 numbers into the input
-                    if(valid.Length <= 3)
+                    if (valid.Length <= 3)
                     {
-                        double checkedValue = double.Parse(char.ToString(keyChar)); //sets value of pressed key to a numeric value
-                        if (checkedValue > 0 && checkedValue < 7) //checks value of number is between 1 and 6
+                        if (value > 0 && double.Parse(value.ToString()) < 7) //checks value of number is between 1 and 6 due to requirements limiting the numbers of the solution being between 1 and 6 for the 4 digits
                         {
-                            Console.Write(keyChar); //add valid number to be visible in the console
+                            Console.Write(key.KeyChar.ToString()); //add valid number to be visible in the console
                             valid = candidate; //set value of accepted values to new value with previously selected value
                         }
                     }
-                }
-                catch (Exception)
-                {
-                    //we don't care about exception and don't want to break program if a non-numeric key is selected
                 }
             }
 
