@@ -60,8 +60,7 @@ namespace MastermindV1.Classes
             while (true)
             {
                 Console.WriteLine("Your Guess");
-                string userEntry = userInputRestriction.ReadKeys(
-                        s => { double.Parse(s); return true; });
+                string userEntry = userInputRestriction.ReadKeys();
 
                 //Check if its an exact match and goes past the logic for each individual value
                 if (userEntry == answer)

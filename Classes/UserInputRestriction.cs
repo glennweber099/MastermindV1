@@ -13,7 +13,7 @@ namespace MastermindV1.Classes
         /// </summary>
         /// <param name="check"></param>
         /// <returns></returns>
-        public string ReadKeys(Predicate<string> check)
+        public string ReadKeys()
         {
             string valid = string.Empty;
             while (true)
