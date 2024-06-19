@@ -30,17 +30,6 @@
                 }
                 indexPlacement++;
             }
-
-            //Handles all numbers not within the answer
-            indexPlacement = 0;
-            while (indexPlacement < answer.Length)
-            {
-                if (!answer.Contains(userEntry[indexPlacement]) && userEntry[indexPlacement] != answer[indexPlacement])
-                {
-                    Console.WriteLine("Positon {0}: ", (indexPlacement + 1).ToString());
-                }
-                indexPlacement++;
-            }
         }
 
         /// <summary>

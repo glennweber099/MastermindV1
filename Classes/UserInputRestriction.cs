@@ -38,11 +38,15 @@
                 string candidate = valid + keyChar; //sets checked value to whatever was already accepted and adds pressed key
                 try
                 {
-                    double checkedValue = double.Parse(char.ToString(keyChar)); //sets value of pressed key to a numeric value
-                    if (checkedValue > 0 && checkedValue < 7) //checks value of number is between 1 and 6
+                    //Prevents user from adding more than 4 numbers into the input
+                    if(valid.Length <= 3)
                     {
-                        Console.Write(keyChar); //add valid number to be visible in the console
-                        valid = candidate; //set value of accepted values to new value with previously selected value
+                        double checkedValue = double.Parse(char.ToString(keyChar)); //sets value of pressed key to a numeric value
+                        if (checkedValue > 0 && checkedValue < 7) //checks value of number is between 1 and 6
+                        {
+                            Console.Write(keyChar); //add valid number to be visible in the console
+                            valid = candidate; //set value of accepted values to new value with previously selected value
+                        }
                     }
                 }
                 catch (Exception)
