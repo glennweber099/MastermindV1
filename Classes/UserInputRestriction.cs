@@ -11,7 +11,7 @@ namespace MastermindV1.Classes
         /// <returns></returns>
         public string ReadKeys()
         {
-            string valid = string.Empty;
+            string validInput = string.Empty;
             while (true)
             {
                 double value;
@@ -20,18 +20,18 @@ namespace MastermindV1.Classes
                 if (key.Key == ConsoleKey.Enter)
                 {
                     //if ENTER is pressed and the length of the input value is 4 then process the value
-                    if (valid.Length == 4)
+                    if (validInput.Length == 4)
                     {
-                        return valid;
+                        return validInput;
                     }
                 }
 
                 if (key.Key == ConsoleKey.Backspace)
                 {
                     //if BACKSPACE is pressed and length of value is greater than 0
-                    if (valid.Length > 0)
+                    if (validInput.Length > 0)
                     {
-                        valid = valid.Substring(0, valid.Length - 1); //removes 1 character at the end from the string being evaluated
+                        validInput = validInput.Substring(0, validInput.Length - 1); //removes 1 character at the end from the string being evaluated
                         Console.Write("\b \b"); //makes change in console visible to user of backspace being inputed
                     }
                 }
@@ -39,14 +39,14 @@ namespace MastermindV1.Classes
                 //checks value of key is a numeric value
                 if (Double.TryParse(key.KeyChar.ToString(), out value))
                 {
-                    string candidate = valid + key.KeyChar; //sets checked value to whatever was already accepted and adds pressed key
+                    string currentInput = validInput + key.KeyChar; //sets checked value to whatever was already accepted and adds pressed key
                     //Prevents user from adding more than 4 numbers into the input
-                    if (valid.Length <= 3)
+                    if (validInput.Length <= 3)
                     {
                         if (value > 0 && double.Parse(value.ToString()) < 7) //checks value of number is between 1 and 6 due to requirements limiting the numbers of the solution being between 1 and 6 for the 4 digits
                         {
                             Console.Write(key.KeyChar.ToString()); //add valid number to be visible in the console
-                            valid = candidate; //set value of accepted values to new value with previously selected value
+                            validInput = currentInput; //set value of accepted values to new value with previously selected value
                         }
                     }
                 }

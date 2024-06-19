@@ -4,7 +4,6 @@ namespace MastermindV1.Classes
 {
     public class MainMenu
     {
-
         /// <summary>
         /// Initial setup of console app and sets the value of Mastermind answer
         /// </summary>
@@ -47,7 +46,6 @@ namespace MastermindV1.Classes
                         TotalAttempts = TotalAttempts + 1;
                         Console.WriteLine("User Attempts Taken: {0}/10", TotalAttempts.ToString());
                         solved = false;
-
                     }
 
                 }
@@ -61,7 +59,7 @@ namespace MastermindV1.Classes
                 else
                 {
                     //Let's user know they ran out of attempts and to try again and ends the program
-                    Console.WriteLine("Out of attempts, try again if you dare!");
+                    Console.WriteLine("Out of attempts, try again!");
                 }
                 break;
             }
